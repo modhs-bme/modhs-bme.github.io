@@ -90,6 +90,9 @@ button[disabled]{opacity:.6;cursor:wait}
 
 .foot{text-align:center;font-size:12.5px;color:var(--muted);margin-top:18px;line-height:1.8}
 
+.hint{font-size:12.5px;color:var(--muted);margin-top:6px;line-height:1.7}
+.field.bad textarea{border-color:var(--err)}
+
 @media (max-width:640px){
   .page{padding:10px 10px 28px}
   .langbar{padding:10px 12px 0}
@@ -192,9 +195,19 @@ button[disabled]{opacity:.6;cursor:wait}
               <option value="جميع المناطق" data-i="rAll"></option>
             </select>
           </div>
+        </div>
+
+        <div class="section" style="margin-top:26px" data-i="secResp"></div>
+        <div class="grid">
+          <div class="field full" id="f-brands">
+            <label for="brands"><span data-i="brands"></span><span class="req">*</span></label>
+            <textarea id="brands" name="brands" data-ph="brandsPh" style="min-height:96px"></textarea>
+            <div class="msg" data-i="eBrands"></div>
+          </div>
           <div class="field full" id="f-devices">
-            <label for="devices"><span data-i="devices"></span></label>
-            <textarea id="devices" name="devices" data-ph="devicesPh"></textarea>
+            <label for="devices"><span data-i="devices"></span><span class="req">*</span></label>
+            <textarea id="devices" name="devices" data-ph="devicesPh" style="min-height:96px"></textarea>
+            <div class="msg" data-i="eDevices"></div>
           </div>
         </div>
       </form>
@@ -222,8 +235,8 @@ button[disabled]{opacity:.6;cursor:wait}
       intro:'نأمل منكم التكرم بتحديث بيانات التواصل الخاصة بكم لتسهيل التواصل والتنسيق مع قطاع الهندسة الطبية الحيوية بوزارة الدفاع.',
       secContact:'بيانات التواصل',secCompany:'بيانات الشركة',name:'الاسم الكامل',job:'المسمى الوظيفي',email:'البريد الإلكتروني',mobile:'رقم الجوال',
       company:'اسم الشركة',region:'المنطقة',rC:'المنطقة الوسطى',rW:'المنطقة الغربية',rE:'المنطقة الشرقية',rN:'المنطقة الشمالية',rS:'المنطقة الجنوبية',rAll:'جميع المناطق',
-      devices:'الأجهزة والمنتجات والعلامات التجارية التي تقع ضمن نطاق مسؤوليتكم',
-      devicesPh:'يرجى توضيح مجال مسؤوليتكم، مثل المبيعات أو الصيانة أو الدعم الفني، مع تحديد الأجهزة أو العلامات التجارية التي تتولون مسؤوليتها.',
+      secResp:'نطاق المسؤولية',brands:'العلامات التجارية التي تتولون مسؤوليتها',devices:'أنواع الأجهزة',
+      brandsPh:'نأمل التكرم بذكر العلامات التجارية أو الشركات المصنعة التي تتولون مسؤوليتها\nعلى سبيل المثال: Siemens Healthineers و Philips',devicesPh:'نأمل التكرم بذكر أنواع الأجهزة التي تتولون مسؤوليتها مع توضيحها لكل علامة تجارية عند الاختلاف\nعلى سبيل المثال: أجهزة السونار من Siemens Healthineers وأجهزة المراقبة من Philips',eBrands:'نأمل ذكر العلامات التجارية',eDevices:'نأمل ذكر أنواع الأجهزة',
       eName:'يرجى كتابة الاسم',eJob:'يرجى كتابة المسمى الوظيفي',eEmail:'يرجى كتابة بريد إلكتروني صحيح',eMobile:'يرجى كتابة رقم جوال سعودي صحيح يبدأ بـ 5',eCompany:'يرجى كتابة اسم الشركة',
       send:'إرسال البيانات',sending:'جارٍ الإرسال',errSend:'تعذر الإرسال، تأكد من الاتصال وحاول مرة أخرى',errFields:'يرجى تعبئة الحقول المطلوبة',preview:'معاينة فقط',
       doneTitle:'تم استلام البيانات',doneText:'شكراً لتعاونكم، تم حفظ بيانات التواصل بنجاح',again:'إضافة مسؤول آخر',
@@ -232,8 +245,8 @@ button[disabled]{opacity:.6;cursor:wait}
       intro:'Kindly update your contact details to facilitate communication and coordination with the Biomedical Engineering Sector, Ministry of Defense.',
       secContact:'Contact details',secCompany:'Company details',name:'Full name',job:'Job title',email:'Email',mobile:'Mobile number',
       company:'Company name',region:'Region',rC:'Central Region',rW:'Western Region',rE:'Eastern Region',rN:'Northern Region',rS:'Southern Region',rAll:'All regions',
-      devices:'Devices, products and brands within your responsibility',
-      devicesPh:'Please describe your area of responsibility, such as sales, service or technical support, and list the devices or brands you are responsible for.',
+      secResp:'Scope of responsibility',brands:'Brands under your responsibility',devices:'Device types',
+      brandsPh:'Kindly list the brands or manufacturers under your responsibility\nFor example: Siemens Healthineers and Philips',devicesPh:'Kindly list the device types under your responsibility, specifying them for each brand where they differ\nFor example: ultrasound systems from Siemens Healthineers and patient monitors from Philips',eBrands:'Kindly list the brands',eDevices:'Kindly list the device types',
       eName:'Please enter your name',eJob:'Please enter your job title',eEmail:'Please enter a valid email address',eMobile:'Please enter a valid Saudi mobile number starting with 5',eCompany:'Please enter the company name',
       send:'Submit',sending:'Submitting',errSend:'Could not submit. Please check your connection and try again',errFields:'Please fill in the required fields',preview:'Preview only',
       doneTitle:'Information received',doneText:'Thank you for your cooperation. Your contact details have been saved successfully',again:'Add another contact person',
@@ -263,11 +276,11 @@ button[disabled]{opacity:.6;cursor:wait}
   function mark(id,bad){$(id).classList.toggle('bad',!!bad);return !bad}
 
   $('mobile').addEventListener('input',function(){var d=normMobile(this.value).slice(0,9);this.value=d.replace(/^(\d{2})(\d{0,3})(\d{0,4}).*/,function(m,a,b,c){return [a,b,c].filter(Boolean).join(' ')})});
-  ['name','job','email','company'].forEach(function(k){$(k).addEventListener('input',function(){$('f-'+k).classList.remove('bad')})});
+  ['name','job','email','company','brands','devices'].forEach(function(k){$(k).addEventListener('input',function(){$('f-'+k).classList.remove('bad')})});
 
   function collect(){
     return {name:$('name').value.trim(),job:$('job').value.trim(),email:$('email').value.trim(),
-      mobile:normMobile($('mobile').value),company:$('company').value.trim(),city:$('city').value,devices:$('devices').value.trim(),lang:lang};
+      mobile:normMobile($('mobile').value),company:$('company').value.trim(),city:$('city').value,brands:$('brands').value.trim(),devices:$('devices').value.trim(),lang:lang};
   }
   function valid(d){
     var ok=true;
@@ -276,6 +289,8 @@ button[disabled]{opacity:.6;cursor:wait}
     ok=mark('f-email',!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(d.email))&&ok;
     ok=mark('f-mobile',!/^5\d{8}$/.test(d.mobile))&&ok;
     ok=mark('f-company',d.company.length<2)&&ok;
+    ok=mark('f-brands',d.brands.length<2)&&ok;
+    ok=mark('f-devices',d.devices.length<2)&&ok;
     return ok;
   }
   function send(d,done,fail){
